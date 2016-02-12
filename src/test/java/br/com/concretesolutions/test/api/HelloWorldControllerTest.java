@@ -3,6 +3,7 @@ package br.com.concretesolutions.test.api;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 import br.com.concretesolutions.api.helloworld.HelloWorldController;
 import br.com.concretesolutions.config.ApplicationConfig;
@@ -22,21 +23,28 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 @SpringApplicationConfiguration(classes = ApplicationConfig.class)
 @WebAppConfiguration
 public class HelloWorldControllerTest {
-  
+
   @InjectMocks
   private HelloWorldController controller;
-  
+
   private MockMvc mock;
-  
+
   @Before
   public void setUp() {
     initMocks(this);
     mock = MockMvcBuilders.standaloneSetup(controller).build();
   }
-  
+
   @Test
   public void helloWorldOkForUnnamedTest() throws Exception {
-    mock.perform(get("/hello")).andExpect(status().isOk());
+    mock.perform(get("/hello")).andExpect(status().isOk())
+        .andExpect(content().string("{\"greeting\":\"Hi there, No Name, how are you today?\"}"));
+  }
+
+  @Test
+  public void helloWorldOkForNamedTest() throws Exception {
+    mock.perform(get("/hello").param("name", "John Doe")).andExpect(status().isOk())
+        .andExpect(content().string("{\"greeting\":\"Hi there, John Doe, how are you today?\"}"));
   }
 
 }
