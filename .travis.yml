@@ -14,3 +14,10 @@ cache:
   - "$HOME/.gradle/wrapper/"
 after_success:
 - codacy-coverage-reporter -l Java -r build/reports/jacoco/test/jacocoTestReport.xml  --prefix src/main/java/
+deploy:
+  provider: heroku
+  api_key:
+    secure: TiM+kQwkFsaMz59VMvk1jGg424AzSg2qylc/P4+3VK28trcUIQghk+tbxVqr6e4HfA+PM5YLJQICozryibGknqsFaBiRRIHnVuyufFWzsUf7pO2xSaohgEPgKyLXWoIyZZ4s/Y9/4ZSxeu4t5S7rSj9TxRZPhBRM3V4tQ66K0zMpSl6U0aYcwApqDzITolyKFGsN28bDUEZJDr4rGtUT2kWXhAJBUQsvRDin966ncMzzbY+/I8nwTmRHw9iOpKqJkwztw2rT02wlyAnwRF24vBjTf4Gv0HUkHtXRDIg7+WXV1yevcQMxG8yfTLcmaxRK4jxZLYmc5+kDeYIltFFkaUclMrb6KcbhO2lMUQmMIBMVEcgcLe4u99jsoxlncQbcsUyaiHwQQe1BD0aN7CXOMyGzFOGGTlLhTEYmACEl9ZHv3dHlUSfAZrKBi7v2mqLgBwZNQv1jX5XHBrdmu3v1K0X4SxSNGSs7tX1tYRHl8KkDNCz+X49DeJrSLTA+e2P1UIWnv6XcyceFy5nHcU76I/km75uKOL2VNRWq288/wEHlszPTlv2xI3DRT6ZZmGLwgGj0gpB7+BFcMeZsF0R4D8PTf2QbTbODqX8tYBz0Jujm3A+f3QSVxrwOofswi0PYQYG1+f062vL62uaXWGuDxvrQv5CRecqf7cieT58ktNQ=
+  app: hello-world-java-blogcs
+  on:
+    repo: joao-felipe-cs/hello-world-java
