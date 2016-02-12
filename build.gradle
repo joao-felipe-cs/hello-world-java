@@ -17,6 +17,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'eclipse'
 apply plugin: 'spring-boot'
+apply plugin: 'jacoco'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -36,6 +37,14 @@ dependencies {
     testCompile 'org.springframework.boot:spring-boot-starter-test'
    
 }
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+    }
+}
+
+check.dependsOn jacocoTestReport
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.10'
