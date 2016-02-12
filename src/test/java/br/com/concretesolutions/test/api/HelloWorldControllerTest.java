@@ -12,9 +12,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author jfelipesp
@@ -37,14 +41,18 @@ public class HelloWorldControllerTest {
 
   @Test
   public void helloWorldOkForUnnamedTest() throws Exception {
-    mock.perform(get("/hello")).andExpect(status().isOk())
-        .andExpect(content().string("{\"greeting\":\"Hi there, No Name, how are you today?\"}"));
+    MvcResult result =  mock.perform(get("/hello")).andReturn();
+    
+    assertEquals(HttpStatus.OK.value(), result.getResponse().getStatus());
+    assertEquals("{\"greeting\":\"Hi there, No Name, how are you today?\"}", result.getResponse().getContentAsString());
   }
 
   @Test
   public void helloWorldOkForNamedTest() throws Exception {
-    mock.perform(get("/hello").param("name", "John Doe")).andExpect(status().isOk())
-        .andExpect(content().string("{\"greeting\":\"Hi there, John Doe, how are you today?\"}"));
+    MvcResult result =  mock.perform(get("/hello").param("name", "John Doe")).andReturn();
+    
+    assertEquals(HttpStatus.OK.value(), result.getResponse().getStatus());
+    assertEquals("{\"greeting\":\"Hi there, John Doe, how are you today?\"}", result.getResponse().getContentAsString());
   }
 
 }
